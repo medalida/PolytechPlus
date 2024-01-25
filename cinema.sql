@@ -6,6 +6,8 @@
 -- Généré le : ven. 03 mars 2023 à 12:55
 -- Version du serveur : 10.4.22-MariaDB
 -- Version de PHP : 8.1.1
+CREATE DATABASE cinema;
+USE cinema;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;

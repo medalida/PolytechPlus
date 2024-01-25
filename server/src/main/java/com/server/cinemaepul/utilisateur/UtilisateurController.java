@@ -40,5 +40,4 @@ public class UtilisateurController {
     public Integer delete(@PathVariable("id") Integer utilisateurId) {
         return this.utilisateurService.delete(utilisateurId);
     }
-
 }

@@ -1,7 +1,6 @@
-package com.server.cinemaepul.personnage;
+package com.server.cinemaepul.charcter;
 
 import java.time.LocalDate;
-import java.util.Locale;
 
 public class PersonnageAvecFilmDto {
 
