@@ -45,6 +45,9 @@ public class Movie {
     @Column(name = "backdrop_path")
     private String backdrop_path;
 
+    @Column(name = "director_id")
+    private int director_id;
+
     @Column(name = "budget")
     private Integer budget;
 

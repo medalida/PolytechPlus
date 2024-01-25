@@ -8,6 +8,7 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,9 @@ public class ActorController {
 
     @Autowired
     private PersonnageService personnageService;
+
+    @Autowired
+    private ActorRepository actorRepository;
 
     @GetMapping
     List<Actor> findAll() {
@@ -39,14 +43,20 @@ public class ActorController {
     }
 
     @PutMapping("/{id}")
-    public Actor update(@PathVariable("id") Integer actor_id,
+    public ResponseEntity<Actor> update(@PathVariable("id") Integer actor_id,
                         @RequestBody Actor actor) {
-        return actorService.update(actor_id, actor);
+        return Optional
+                .ofNullable( actorService.update(actor_id, actor) )
+                .map( user -> ResponseEntity.ok().body(user) )
+                .orElseGet( () -> ResponseEntity.notFound().build() );
     }
 
     @DeleteMapping("/{id}")
-    public Integer delete(@PathVariable("id") Integer actor_id) {
-        return actorService.delete(actor_id);
+    public ResponseEntity<Integer> delete(@PathVariable("id") Integer actor_id) {
+        return Optional
+                .ofNullable( actorService.delete(actor_id) )
+                .map( user -> ResponseEntity.ok().body(user) )
+                .orElseGet( () -> ResponseEntity.notFound().build() );
     }
 
     @GetMapping("/{id}/characters")

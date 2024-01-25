@@ -7,7 +7,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/personnages")
-public class PersonnageController {
+public class CharacterController {
     @Autowired
     private PersonnageService personnageService;
 

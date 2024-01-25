@@ -49,5 +49,5 @@ public class Actor {
 
     @OneToMany(mappedBy = "actor")
     @JsonIgnore
-    private Set<Character> personnages = new LinkedHashSet<>();
+    private Set<Character> characters = new LinkedHashSet<>();
 }

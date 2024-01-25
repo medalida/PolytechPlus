@@ -1,5 +1,6 @@
 package com.server.cinemaepul.actor;
 
+import com.server.cinemaepul.charcter.Character;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,13 +36,14 @@ public class ActorService {
      * Met à jour un acteur en base
      *
      * @param actor_id    id acteur
-     * @param actorInput actorInput
+     * @param actor actorInput
      * @return acteur mis à jour
      */
-    public Actor update(Integer actor_id, Actor actorInput) {
-        Actor oldActeur = getByIdOrThrow(actor_id);
-        actorInput.setId(oldActeur.getId());
-        return actorRepository.save(actorInput);
+    public Actor update(Integer actor_id, Actor actor) {
+        Actor old_actor = getByIdOrThrow(actor_id);
+        if (old_actor == null) return null;
+        actor.setId(actor_id);
+        return actorRepository.save(actor);
     }
 
     /**
@@ -55,6 +57,4 @@ public class ActorService {
         actorRepository.delete(acteur);
         return acteurId;
     }
-
-    
 }

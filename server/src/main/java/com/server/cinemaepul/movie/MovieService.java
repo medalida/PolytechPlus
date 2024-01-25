@@ -1,7 +1,7 @@
 package com.server.cinemaepul.movie;
 
 import com.server.cinemaepul.movie_genre.CategorieService;
-import com.server.cinemaepul.director.RealisateurService;
+import com.server.cinemaepul.director.DirectorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -21,14 +21,10 @@ public class MovieService {
     private CategorieService categorieService;
 
     @Autowired
-    private RealisateurService realisateurService;
+    private DirectorService directorService;
 
     public Movie getByIdOrThrow(Integer filmId) {
-        return filmRepository.findById(filmId)
-                .orElseThrow(() -> {
-                    log.error("Film {} non trouvé en base", filmId);
-                    return new RuntimeException("Le film n'a pas été trouvé");
-                });
+        return filmRepository.findById(filmId).orElse(null);
     }
 
     public Optional<Movie> getByTitre(String titre) {
@@ -58,6 +54,7 @@ public class MovieService {
 
     public Movie update(Integer movie_id, Movie movie) {
         Movie old_movie = getByIdOrThrow(movie_id);
+        if (old_movie == null) return null;
         movie.setId(old_movie.getId());
         return filmRepository.save(movie);
     }

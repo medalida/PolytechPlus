@@ -21,7 +21,7 @@ public class Character {
     private int id;
 
     @Column(name = "name", nullable = false)
-    private int name;
+    private String name;
 
     @Column(name = "gender", nullable = false)
     private Gender gender;
@@ -32,14 +32,9 @@ public class Character {
     @Column(name = "profile_path", nullable = false)
     private String profile_path;
 
+    @Column(name = "actor_id")
+    private Integer actor;
 
-    @MapsId("actor")
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "actor_id")
-    private Actor actor;
-
-    @MapsId("movie")
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "movie_id")
-    private Movie movie;
+    @Column(name = "movie_id")
+    private int movie;
 }

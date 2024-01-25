@@ -1,5 +1,6 @@
 package com.server.cinemaepul.director;
 
+import com.server.cinemaepul.movie.Movie;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,12 +9,12 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class RealisateurService {
+public class DirectorService {
     @Autowired
-    private RealisateurRepository realisateurRepository;
+    private DirectorRepository directorRepository;
 
     public Director getByIdOrThrow(Integer realisateurId) {
-        return realisateurRepository.findById(realisateurId)
+        return directorRepository.findById(realisateurId)
                 .orElseThrow(() -> {
                     log.error("Realisateur {} non trouvé en base", realisateurId);
                     return new RuntimeException("Le realisateur n'a pas été trouvé");
@@ -21,7 +22,7 @@ public class RealisateurService {
     }
 
     public List<Director> findAll() {
-        return realisateurRepository.findAll();
+        return directorRepository.findAll();
     }
 
 //    public Director findByNom(String nom) {
@@ -29,17 +30,17 @@ public class RealisateurService {
 //    }
 
     public Director create(Director director) {
-        return realisateurRepository.save(director);
+        return directorRepository.save(director);
     }
 
     public Director update(Integer director_id, Director director) {
         Director old_director = getByIdOrThrow(director_id);
         director.setId(old_director.getId());
-        return realisateurRepository.save(director);
+        return directorRepository.save(director);
     }
 
     public Integer delete(Integer director_id) {
-        realisateurRepository.deleteById(director_id);
+        directorRepository.deleteById(director_id);
         return director_id;
     }
 }

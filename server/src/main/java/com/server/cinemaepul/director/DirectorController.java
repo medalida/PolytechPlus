@@ -6,19 +6,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/realisateurs")
-public class RealisateurController {
+@RequestMapping("/directors")
+public class DirectorController {
     @Autowired
-    private RealisateurService realisateurService;
+    private DirectorService directorService;
 
     @GetMapping
     public List<Director> findAll() {
-        return realisateurService.findAll();
+        return directorService.findAll();
     }
 
     @GetMapping("/{id}")
     public Director getByIdOrThrow(@PathVariable("id") Integer realisateurId) {
-        return realisateurService.getByIdOrThrow(realisateurId);
+        return directorService.getByIdOrThrow(realisateurId);
     }
 
 //    @GetMapping("/nom/{nom}")
@@ -28,17 +28,17 @@ public class RealisateurController {
 
     @PostMapping
     public Director create(@RequestBody Director director) {
-        return realisateurService.create(director);
+        return directorService.create(director);
     }
 
     @PutMapping("/{id}")
     public Director update(@PathVariable("id") Integer realisateurId,
                            @RequestBody Director director) {
-        return realisateurService.update(realisateurId, director);
+        return directorService.update(realisateurId, director);
     }
 
     @DeleteMapping("/{id}")
     public Integer delete(@PathVariable("id") Integer realisateurId) {
-        return realisateurService.delete(realisateurId);
+        return directorService.delete(realisateurId);
     }
 }

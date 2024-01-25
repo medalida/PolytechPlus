@@ -2,20 +2,26 @@ package com.server.cinemaepul.movie;
 
 import com.server.cinemaepul.charcter.Character;
 import com.server.cinemaepul.charcter.PersonnageService;
+import com.server.cinemaepul.director.Director;
+import com.server.cinemaepul.director.DirectorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/films")
-public class FilmController {
+@RequestMapping("/movies")
+public class MovieController {
     @Autowired
     private MovieService movieService;
 
     @Autowired
     private PersonnageService personnageService;
+
+    @Autowired
+    private DirectorService directorService;
 
     @GetMapping
     public List<Movie> findAll() {
@@ -23,8 +29,11 @@ public class FilmController {
     }
 
     @GetMapping("/{id}")
-    public Movie getByIdOrThrow(@PathVariable("id") Integer filmId) {
-        return movieService.getByIdOrThrow(filmId);
+    public ResponseEntity<Movie> getByIdOrThrow(@PathVariable("id") Integer filmId) {
+        return Optional
+                .ofNullable( movieService.getByIdOrThrow(filmId) )
+                .map( user -> ResponseEntity.ok().body(user) )
+                .orElseGet( () -> ResponseEntity.notFound().build() );
     }
 
     @GetMapping("/titre/{titre}")
@@ -53,6 +62,17 @@ public class FilmController {
         }
     }
 
+    @GetMapping("/{id}/director")
+    public Director getDirectorByMovie(@PathVariable("id") Integer movie_id) {
+        try {
+            Movie movie = movieService.getByIdOrThrow(movie_id);
+            return directorService.getByIdOrThrow(movie.getDirector_id());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @GetMapping("/best")
         public List<Movie> getBestFilms() {
             return movieService.getBestFilms();
@@ -64,13 +84,19 @@ public class FilmController {
     }
 
     @PutMapping("/{id}")
-    public Movie update(@PathVariable("id") Integer movie_id,
+    public ResponseEntity<Movie> update(@PathVariable("id") Integer movie_id,
                         @RequestBody Movie movie) {
-        return movieService.update(movie_id, movie);
+        return Optional
+                .ofNullable( movieService.update(movie_id, movie) )
+                .map( user -> ResponseEntity.ok().body(user) )
+                .orElseGet( () -> ResponseEntity.notFound().build() );
     }
 
     @DeleteMapping("/{id}")
-    public Integer delete(@PathVariable("id") Integer filmId) {
-        return movieService.delete(filmId);
+    public ResponseEntity<Integer> delete(@PathVariable("id") Integer filmId) {
+        return Optional
+                .ofNullable( movieService.delete(filmId) )
+                .map( user -> ResponseEntity.ok().body(user) )
+                .orElseGet( () -> ResponseEntity.notFound().build() );
     }
 }

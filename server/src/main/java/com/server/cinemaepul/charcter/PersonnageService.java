@@ -54,7 +54,7 @@ public class PersonnageService {
 
     public List<Character> getCharactersByActor(Integer actor_id){
         Actor actor = actorService.getByIdOrThrow(actor_id);
-        return characterRepository.findAllByActor(actor);
+        return characterRepository.findAllByActor(actor_id);
     }
 
     public List<Character> getCharactersByMovie(Integer movie_id) {
