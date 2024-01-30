@@ -1,7 +1,6 @@
 package com.server.cinemaepul.utilisateur;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jdk.jshell.execution.Util;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,13 +28,13 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserDetailsImpl build(Utilisateur utilisateur) {
-        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(utilisateur.getRole()));
+    public static UserDetailsImpl build(User user) {
+        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole()));
 
         return new UserDetailsImpl(
-                utilisateur.getId(),
-                utilisateur.getLogin(),
-                utilisateur.getPassword(),
+                user.getId(),
+                user.getUsername(),
+                user.getPassword(),
                 authorities);
     }
 
